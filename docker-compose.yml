@@ -1,0 +1,41 @@
+services:
+    redis:
+        image: redis:alpine
+        ports:
+            - 6379
+
+    celery_worker:
+        build: ./
+        command: celery worker -A app
+        env_file: .env
+
+    celery_worker_con:
+        build: ./
+        command: celery worker -A app --concurrency=99
+        env_file: .env
+
+    celery_worker_aut:
+        build: ./
+        command: celery worker -A app --autoscale=19,10
+        env_file: .env
+
+    celery_worker_con_aut:
+        build: ./
+        command: celery worker -A app --concurrency=99  --autoscale=19,10
+        env_file: .env
+
+    celery_worker_aut_con:
+        build: ./
+        command: celery worker -A app --autoscale=19,10 --concurrency=99  
+        env_file: .env
+
+    celery_worker_0_1:
+        build: ./
+        command: celery worker -A app --autoscale=1,0 --concurrency=99  
+        env_file: .env
+
+    flower:
+        image: mher/flower
+        env_file: .env
+        ports:
+            - ${FLOWER_PORT}:${FLOWER_PORT}
