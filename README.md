@@ -14,4 +14,5 @@ Celery version:
 7 | `celery worker -A app --autoscale=0,0 --concurrency=99 ` | Max concurrency: 0, Max: 0, Min: 0 (will hand in RECEIVED)
 
 ## Try it
-run `docker compose up --build
+* `cp .env.copy .env`
+* `docker compose up --build`
